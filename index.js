@@ -20,13 +20,18 @@ var getOptions = function (doc) {
     var num = $o("-n", "--number", "0", o);
     var it = $o("-i", "--iterator", "i", o);
     var max = $o("-m", "--max", "?", o);
+    var boiler = $o("-b", "--boilerplate", false, o);
     return {
-        help: help, vname: vname, sname: sname, num: num, it: it, max: max
+        help: help, vname: vname, sname: sname, num: num, it: it, max: max, boiler: boiler
     };
 };
 
+var graphboiler = function (t) {
+    return "\n\tdigraph g {\n\t\tgraph [\n\t\t\trankdir = \"LR\"\n\t\t];\n\t\t" + t + "\n\t}\n\t";
+};
+
 var template = function (d) {
-    return "\n\tdigraph g {\n\n    graph [\n        rankdir = \"LR\"\n    ];\n\n\tsubgraph cluster_" + d.num + "0 {\n        label = \"" + d.vname + "\";\n        fontname = \"Roboto Condensed Regular\"\n        \"node" + d.num + "00\" [\n            label = \"[0]|...| <ty" + d.num + "> [" + d.it + "] |...| [" + d.max + "]\"\n            shape = \"record\"\n            fontname = \"Roboto Condensed Regular\"\n         ];\n         \"node" + d.num + "01\" [\n            label=\"Array di '" + d.sname + "'\"\n            shape=plaintext\n            fontname=\"Roboto Condensed Bold\"\n         ]\n    }\n\n\tsubgraph cluster_" + d.num + "1 {\n        label = \"" + d.vname + "[" + d.it + "]\";\n        fontname = \"Roboto Condensed Regular\"\n        \"node" + d.num + "10\" [\n            label = \"f1 | f2 | f3\"\n            shape = \"record\"\n            fontname = \"Roboto Condensed Regular\"\n            ];\n\n        \"node" + d.num + "11\" [\n            label=\"struct '" + d.sname + "'\"\n            shape=plaintext\n            fontname=\"Roboto Condensed Bold\"\n        ]\n    }\n\n\tnode" + d.num + "00:ty" + d.num + " -> node" + d.num + "10:nw\n}\n\t";
+    return "\n\tsubgraph cluster_" + d.num + "0 {\n        label = \"" + d.vname + "\";\n        fontname = \"Roboto Condensed Regular\"\n        \"node" + d.num + "00\" [\n            label = \"[0]|...| <ty" + d.num + "> [" + d.it + "] |...| [" + d.max + "]\"\n            shape = \"record\"\n            fontname = \"Roboto Condensed Regular\"\n         ];\n         \"node" + d.num + "01\" [\n            label=\"Array di '" + d.sname + "'\"\n            shape=plaintext\n            fontname=\"Roboto Condensed Bold\"\n         ]\n    }\n\n\tsubgraph cluster_" + d.num + "1 {\n        label = \"" + d.vname + "[" + d.it + "]\";\n        fontname = \"Roboto Condensed Regular\"\n        \"node" + d.num + "10\" [\n            label = \"f1 | f2 | f3\"\n            shape = \"record\"\n            fontname = \"Roboto Condensed Regular\"\n            ];\n\n        \"node" + d.num + "11\" [\n            label=\"struct '" + d.sname + "'\"\n            shape=plaintext\n            fontname=\"Roboto Condensed Bold\"\n        ]\n    }\n\n\tnode" + d.num + "00:ty" + d.num + " -> node" + d.num + "10:nw\n";
 };
 
 var main = function () {
@@ -35,9 +40,15 @@ var main = function () {
         if (o.help) {
             console.log(it);
         } else {
-            $c(template(o)).then(function () {
-                console.log("Copied");
-            });
+            if (o.boiler) {
+                $c(graphboiler(template(o))).then(function () {
+                    console.log("copied");
+                });
+            } else {
+                $c(template(o)).then(function () {
+                    console.log("Copied");
+                });
+            }
         }
     });
 };

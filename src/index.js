@@ -8,25 +8,31 @@ var $c = $b.promisify(require('copy-paste').copy)
 var getOptions = doc => {
     "use strict"
     var o = $d(doc)
-    var help	= $o('-h', '--help', false, o)
-	var vname	= o.VARNAME
-	var sname	= $o('-s', '--structure', null, o)
-	var num		= $o('-n', '--number', '0', o)
-	var it		= $o('-i', '--iterator', 'i', o)
-	var max		= $o('-m', '--max', '?', o)
+    var help = $o('-h', '--help', false, o)
+    var vname = o.VARNAME
+    var sname = $o('-s', '--structure', null, o)
+    var num = $o('-n', '--number', '0', o)
+    var it = $o('-i', '--iterator', 'i', o)
+    var max = $o('-m', '--max', '?', o)
+    var boiler = $o('-b', '--boilerplate', false, o)
     return {
-        help, vname, sname, num, it, max
+        help, vname, sname, num, it, max, boiler
     }
 }
 
-var template = (d) => {
-	return `
+var graphboiler = (t) => {
+    return `
 	digraph g {
+		graph [
+			rankdir = "LR"
+		];
+		${t}
+	}
+	`
+}
 
-    graph [
-        rankdir = "LR"
-    ];
-
+var template = (d) => {
+    return `
 	subgraph cluster_${d.num}0 {
         label = "${d.vname}";
         fontname = "Roboto Condensed Regular"
@@ -59,8 +65,8 @@ var template = (d) => {
     }
 
 	node${d.num}00:ty${d.num} -> node${d.num}10:nw
+`
 }
-	`}
 
 var main = () => {
     $f.readLocal('docs/usage.md').then(it => {
@@ -68,10 +74,17 @@ var main = () => {
         if (o.help) {
             console.log(it)
         } else {
-		$c(template(o)).then( () => {
-				console.log("Copied");
-			})
-		}
+            if (o.boiler) {
+                $c(graphboiler(template(o))).then(() => {
+                    console.log("copied")
+                })
+            } else {
+                $c(template(o)).then(() => {
+                    console.log("Copied");
+                })
+            }
+
+        }
     })
 }
 

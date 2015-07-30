@@ -1,5 +1,5 @@
 Usage:
-	dot-helper array VARNAME -s SNAME [-n NUM] [ -i IT ] [ -m MAX ]
+	dot-helper array VARNAME -s SNAME [-n NUM] [ -i IT ] [ -m MAX ] [ -b ]
 	dot-helper ( -h | --help )
 
 Options:
@@ -8,6 +8,7 @@ Options:
 	-n, --number NUM        number of the subgraph               (default: '0')
 	-i, --iterator IT       name of the iteratori to use         (default: 'i')
 	-m, --max MAX           name of the upper bound of the array (default: '?')
+	-b, --boilerplate       generates dot graph boilerplate too  (default: false)
 Commands:
 	array                   generates a dot representation of an array of structs
 
