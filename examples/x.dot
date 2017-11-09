@@ -1,0 +1,41 @@
+
+	digraph g {
+		graph [
+			rankdir = "LR"
+		];
+		
+	subgraph cluster_00 {
+        label = "dipendenti";
+        fontname = "Roboto Condensed Regular"
+        "node000" [
+            label = "[0]|...| <ty0> [i] |...| [?]"
+            shape = "record"
+            fontname = "Roboto Condensed Regular"
+         ];
+         "node001" [
+            label="Array di 'Camionista'"
+            shape=plaintext
+            fontname="Roboto Condensed Bold"
+         ]
+    }
+
+	subgraph cluster_01 {
+        label = "dipendenti[i]";
+        fontname = "Roboto Condensed Regular"
+        "node010" [
+            label = "f1 | f2 | f3"
+            shape = "record"
+            fontname = "Roboto Condensed Regular"
+            ];
+
+        "node011" [
+            label="struct 'Camionista'"
+            shape=plaintext
+            fontname="Roboto Condensed Bold"
+        ]
+    }
+
+	node000:ty0 -> node010:nw
+
+	}
+	

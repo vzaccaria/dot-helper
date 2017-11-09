@@ -35,32 +35,32 @@ var template = (d) => {
     return `
 	subgraph cluster_${d.num}0 {
         label = "${d.vname}";
-        fontname = "Roboto Condensed Regular"
+        fontname = "RobotoCondensed-Regular"
         "node${d.num}00" [
             label = "[0]|...| <ty${d.num}> [${d.it}] |...| [${d.max}]"
             shape = "record"
-            fontname = "Roboto Condensed Regular"
+            fontname = "RobotoCondensed-Regular"
          ];
          "node${d.num}01" [
             label="Array di '${d.sname}'"
             shape=plaintext
-            fontname="Roboto Condensed Bold"
+            fontname="RobotoCondensed-Bold"
          ]
     }
 
 	subgraph cluster_${d.num}1 {
         label = "${d.vname}[${d.it}]";
-        fontname = "Roboto Condensed Regular"
+        fontname = "RobotoCondensed-Regular"
         "node${d.num}10" [
             label = "f1 | f2 | f3"
             shape = "record"
-            fontname = "Roboto Condensed Regular"
+            fontname = "RobotoCondensed-Regular"
             ];
 
         "node${d.num}11" [
             label="struct '${d.sname}'"
             shape=plaintext
-            fontname="Roboto Condensed Bold"
+            fontname="RobotoCondensed-Bold"
         ]
     }
 
